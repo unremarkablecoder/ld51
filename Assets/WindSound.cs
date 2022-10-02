@@ -23,4 +23,8 @@ public class WindSound : MonoBehaviour {
     void Update() {
         source.volume = min + (max-min) * (Mathf.Sin((Time.time + offset) * speed) + 1) * 0.5f;
     }
+
+    public float GetWind() {
+        return source.volume / max;
+    }
 }

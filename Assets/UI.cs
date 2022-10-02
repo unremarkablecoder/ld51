@@ -27,6 +27,7 @@ public class UI : MonoBehaviour {
     public void OnResults() {
         gameOver.SetActive(false);
         results.SetActive(true);
+        root.ShowTree();
     }
 
     public void OnRestart() {

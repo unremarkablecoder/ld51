@@ -61,11 +61,25 @@ public class Root : MonoBehaviour {
     private const float maxAngle = 45;
     private const float waterSpeed = 10f;
 
+    private Coroutine showTreeCoroutine;
+
+    private float orgOrhtoSize;
+    private Vector3 orgCamPos;
+    
+    void Awake() {
+        var cam = Camera.main;
+        orgCamPos = cam.transform.position;
+        orgOrhtoSize = cam.orthographicSize;
+    }
+
     public void StartGame() {
         paused = false;
     }
 
     public void RestartGame() {
+        timerBar.gameObject.SetActive(true);
+        Camera.main.transform.position = orgCamPos;
+        Camera.main.orthographicSize = orgOrhtoSize;
         ClearNode(root);
         items.GenerateItems();
         timer = 0;
@@ -76,6 +90,22 @@ public class Root : MonoBehaviour {
         //root.relPos = new Vector2(0, -1);
         root.growAngleRads = Mathf.Atan2(-1, 0);
         root.AddChild(new Node(new Vector2(0, -1), 1));
+    }
+
+    public void ShowTree() {
+        timerBar.gameObject.SetActive(false);
+        showTreeCoroutine = StartCoroutine(ShowTreeCo());
+    }
+
+    private IEnumerator ShowTreeCo() {
+        var camPos = Camera.main.transform.position;
+        while (camPos.y < 11.5f) {
+            camPos.y += 11.5f * Time.deltaTime;
+            Camera.main.transform.position = camPos;
+            yield return new WaitForEndOfFrame();
+        }
+
+        
     }
 
     private void ClearNode(Node node) {
