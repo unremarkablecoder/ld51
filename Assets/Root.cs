@@ -77,6 +77,11 @@ public class Root : MonoBehaviour {
     }
 
     public void RestartGame() {
+        if (showTreeCoroutine != null) {
+            StopCoroutine(showTreeCoroutine);
+        }
+
+        showTreeCoroutine = null;
         timerBar.gameObject.SetActive(true);
         Camera.main.transform.position = orgCamPos;
         Camera.main.orthographicSize = orgOrhtoSize;
