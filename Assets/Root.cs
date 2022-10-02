@@ -104,9 +104,12 @@ public class Root : MonoBehaviour {
 
     private IEnumerator ShowTreeCo() {
         var camPos = Camera.main.transform.position;
-        while (camPos.y < 11.5f) {
-            camPos.y += 11.5f * Time.deltaTime;
+        while (camPos.y < 15.5f) {
+            camPos.y += 15.5f * Time.deltaTime;
             Camera.main.transform.position = camPos;
+            if (Camera.main.orthographicSize < 16) {
+                Camera.main.orthographicSize += 4 * Time.deltaTime;
+            }
             yield return new WaitForEndOfFrame();
         }
 
